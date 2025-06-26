@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# npm package manager cache
+.npm/
+
+# Yarn package manager cache
+.yarn/
+
+# VS Code directory
+.vscode/
