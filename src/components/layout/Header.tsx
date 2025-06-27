@@ -91,7 +91,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center space-x-8">
             {renderNavLinks()}
             <Link
-              href="#whatsapp-contact"
+              href="/#whatsapp-contact"
               className="ml-4 bg-primary text-white px-5 py-2 rounded hover:bg-secondary transition"
             >
               Free Consultation
@@ -139,7 +139,7 @@ export default function Header() {
               <div className="px-4 py-4 space-y-2 flex flex-col items-center">
                 {renderNavLinks(true)}
                 <Link
-                  href="#whatsapp-contact"
+                  href="/#whatsapp-contact"
                   className="bg-primary text-white px-5 py-2 rounded hover:bg-secondary transition"
                 >
                   Free Consultation

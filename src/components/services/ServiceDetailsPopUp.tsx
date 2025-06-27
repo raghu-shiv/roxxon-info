@@ -76,25 +76,60 @@ const serviceDetails = [
     ],
   },
   {
-    title: "Digital Service Cloud Platform",
+    title: "Mobile App Development",
     points: [
       {
-        name: "Remote Cloud Support",
+        name: "Cross-Platform Development",
         description:
-          "We offer real-time remote support for cloud setup, configuration, and maintenance. Our experts ensure continuous uptime and fast issue resolution—minimizing disruptions to your operations.",
+          "Build once and deploy across both iOS and Android, significantly reducing time and cost without compromising performance or design quality.",
       },
       {
-        name: "Scalable Cloud Solutions",
+        name: "Native Performance",
         description:
-          "Get access to secure cloud storage, automated data backups, software hosting, and remote collaboration tools. We help businesses streamline workflows, reduce IT overheads, and enhance productivity.",
+          "React Native components are compiled into native code, delivering fast and fluid performance that's indistinguishable from apps built using native tools.",
       },
       {
-        name: "Cloud-Based Customer Service",
+        name: "Consistent UI & UX",
         description:
-          "Our cloud-enabled customer service ensures rapid query resolution, resource optimization, and smooth user experiences—enhancing service delivery across digital touchpoints.",
+          "Create visually consistent interfaces that adapt seamlessly to various screen sizes and platforms, ensuring a smooth user experience.",
+      },
+      {
+        name: "Faster Iteration with Hot Reloading",
+        description:
+          "Speed up the development process with live reloading and real-time preview of changes—ideal for rapid prototyping and debugging.",
+      },
+      {
+        name: "Extensive Libraries & Community Support",
+        description:
+          "Tap into a vast ecosystem of libraries, plugins, and community tools to accelerate development and integrate advanced features with ease.",
+      },
+      {
+        name: "Secure and Scalable",
+        description:
+          "Build apps that not only perform well but also meet enterprise-grade security and scalability standards, ready for growth.",
       },
     ],
   },
+  // {
+  //   title: "Digital Service Cloud Platform",
+  //   points: [
+  //     {
+  //       name: "Remote Cloud Support",
+  //       description:
+  //         "We offer real-time remote support for cloud setup, configuration, and maintenance. Our experts ensure continuous uptime and fast issue resolution—minimizing disruptions to your operations.",
+  //     },
+  //     {
+  //       name: "Scalable Cloud Solutions",
+  //       description:
+  //         "Get access to secure cloud storage, automated data backups, software hosting, and remote collaboration tools. We help businesses streamline workflows, reduce IT overheads, and enhance productivity.",
+  //     },
+  //     {
+  //       name: "Cloud-Based Customer Service",
+  //       description:
+  //         "Our cloud-enabled customer service ensures rapid query resolution, resource optimization, and smooth user experiences—enhancing service delivery across digital touchpoints.",
+  //     },
+  //   ],
+  // },
   {
     title: "Biometric Security Solutions",
     points: [

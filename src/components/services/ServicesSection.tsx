@@ -31,6 +31,12 @@ const services = [
   //   icon: "/images/flaticon/svg/004-travel-3.svg",
   // },
   {
+    title: "Mobile App Development",
+    description:
+      "Our Mobile App Development service empowers businesses to deliver seamless, high-performance applications across Android platform. Using cutting-edge technologies like React Native, we create scalable, user-friendly mobile apps tailored to your specific needs—while ensuring faster development cycles and consistent UI across devices.",
+    icon: "/images/flaticon/svg/004-travel-3.svg",
+  },
+  {
     title: "Biometric Security Solutions",
     description:
       "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification. Replacing traditional passwords and PINs with physical and behavioral identifiers, we help businesses enhance security, streamline access control, and reduce fraud across sectors like law enforcement, healthcare, travel, and defense.",
