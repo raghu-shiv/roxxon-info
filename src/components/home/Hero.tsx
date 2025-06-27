@@ -26,11 +26,11 @@ export default function Hero() {
       className="relative h-screen -mt-[5.75rem] bg-[url('/images/bg_1.jpg')] bg-cover bg-center flex sm:flex-col items-center justify-center text-white px-4"
     >
       <div className="absolute inset-0 bg-[#060a24]/60" />
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-start">
         <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
           Experienced for Every Kind of IT Solution
         </h1>
-        <p className="text-lg md:text-xl max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl max-w-2xl">
           We provide innovative IT solutions for your business.
         </p>
         <a

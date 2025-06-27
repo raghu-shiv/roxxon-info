@@ -93,7 +93,7 @@ Message: ${message}`
                     type={field === "email" ? "email" : "text"}
                     name={field}
                     placeholder={field === "email" ? "Email" : "Your Name"}
-                    required
+                    required={field === "email" ? false : true}
                     value={formData[field as keyof WhatsAppContactData]}
                     onChange={handleChange}
                     className={`${inputClasses} ${errors[field as keyof WhatsAppContactData] && "border-red-500"}`}

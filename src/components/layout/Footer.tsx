@@ -12,8 +12,8 @@ export default function Footer() {
   ];
 
   const legalLinks = [
-    { href: "#", label: "Privacy & Policy" },
-    { href: "#", label: "Terms & Conditions" },
+    { href: "/privacy-policy", label: "Privacy & Policy" },
+    { href: "/terms-and-conditions", label: "Terms & Conditions" },
   ];
 
   const socialIcons = ["twitter", "facebook", "instagram"];
