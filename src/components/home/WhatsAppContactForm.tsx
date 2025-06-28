@@ -92,7 +92,9 @@ Message: ${message}`
                   <input
                     type={field === "email" ? "email" : "text"}
                     name={field}
-                    placeholder={field === "email" ? "Email" : "Your Name"}
+                    placeholder={
+                      field === "email" ? "Email (Optional)" : "Your Name"
+                    }
                     required={field === "email" ? false : true}
                     value={formData[field as keyof WhatsAppContactData]}
                     onChange={handleChange}
@@ -120,6 +122,7 @@ Message: ${message}`
                 </option>
                 {[
                   "Web Design/Development",
+                  "Mobile App Development",
                   "IT Infrastructure Management",
                   "Annual Maintenance Contract",
                   "Biometric Security Solutions",

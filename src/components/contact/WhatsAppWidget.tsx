@@ -9,7 +9,7 @@ const WhatsAppWidget = () => {
       phoneNumber="918090452438"
       accountName="Roxxon Infotech"
       darkMode
-      avatar="/images/logo.png"
+      avatar="/images/logo-1.png"
     />
   );
 };
