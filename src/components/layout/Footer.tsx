@@ -8,6 +8,7 @@ export default function Footer() {
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
     { href: "/services", label: "What We Do" },
+    { href: "/our-projects", label: "Recent Projects" },
     { href: "tel:+918090452438", label: "Call Us" },
   ];
 
