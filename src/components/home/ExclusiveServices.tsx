@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { FaRegFileCode, FaFingerprint } from "react-icons/fa6";
-import { GiCctvCamera } from "react-icons/gi";
+import { GiWizardStaff } from "react-icons/gi";
 import { HiServerStack } from "react-icons/hi2";
 import { motion } from "framer-motion";
 
@@ -12,20 +12,20 @@ const services = [
     desc: "Our Web Designing services focus on crafting responsive, visually stunning, and conversion-oriented websites to engage users.",
   },
   {
-    icon: <GiCctvCamera />,
-    title: "CCTV Surveillance",
-    desc: "Our CCTV Surveillance solutions deliver 24/7 real-time monitoring to enhance the safety of your property.",
+    icon: <GiWizardStaff />,
+    title: "Workforce Solutions",
+    desc: "Our Workforce Solutions provide comprehensive tools to optimize employee productivity, streamline operations, and enhance overall organizational efficiency.",
   },
   {
     icon: <HiServerStack />,
     title: "Server Security",
     desc: "From networks and servers to endpoint devices, we oversee every layer of infrastructure with a focus on operational efficiency and cybersecurity.",
   },
-  {
-    icon: <FaFingerprint />,
-    title: "Biometrics",
-    desc: "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification.",
-  },
+  // {
+  //   icon: <FaFingerprint />,
+  //   title: "Biometrics",
+  //   desc: "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification.",
+  // },
 ];
 
 const boxVariants = {

@@ -13,17 +13,17 @@ const services = [
     icon: "/images/flaticon/svg/002-travel-1.svg",
   },
   {
-    title: "Web Designing",
+    title: "Software Development",
     description:
       "In today’s digital-first world, your website is your brand’s first and most powerful impression. Our Web Designing services focus on crafting responsive, visually stunning, and conversion-oriented websites that engage users and deliver results.",
     icon: "/images/flaticon/svg/001-travel.svg",
   },
-  {
-    title: "Annual Maintenance Contract",
-    description:
-      "Our Annual Maintenance Contract (AMC) services are tailored to deliver uninterrupted IT performance, seamless connectivity, and end-to-end system integration. Roxxon Infotech ensures that your infrastructure operates efficiently, so you can stay focused on scaling your business.",
-    icon: "/images/flaticon/svg/003-travel-2.svg",
-  },
+  // {
+  //   title: "Annual Maintenance Contract",
+  //   description:
+  //     "Our Annual Maintenance Contract (AMC) services are tailored to deliver uninterrupted IT performance, seamless connectivity, and end-to-end system integration. Roxxon Infotech ensures that your infrastructure operates efficiently, so you can stay focused on scaling your business.",
+  //   icon: "/images/flaticon/svg/003-travel-2.svg",
+  // },
   // {
   //   title: "Digital Service Cloud Platform",
   //   description:
@@ -37,17 +37,23 @@ const services = [
     icon: "/images/flaticon/svg/004-travel-3.svg",
   },
   {
-    title: "Biometric Security Solutions",
+    title: "Workforce Solutions",
     description:
-      "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification. Replacing traditional passwords and PINs with physical and behavioral identifiers, we help businesses enhance security, streamline access control, and reduce fraud across sectors like law enforcement, healthcare, travel, and defense.",
-    icon: "/images/flaticon/svg/005-travel-4.svg",
+      "Our Workforce Solutions service is designed to optimize your human capital management, ensuring that your organization has the right talent in the right roles. From recruitment and onboarding to training and performance management, we provide comprehensive solutions that enhance productivity, employee engagement, and organizational growth.",
+    icon: "/images/flaticon/svg/004-travel-3.svg",
   },
-  {
-    title: "CCTV Surveillance",
-    description:
-      "Our CCTV Surveillance solutions deliver 24/7 real-time monitoring to enhance the safety of your property. Using advanced video camera systems, we enable live and recorded views of indoor and outdoor environments, helping to deter crime and safeguard your assets with dependable and scalable security systems.",
-    icon: "/images/flaticon/svg/006-food.svg",
-  },
+  // {
+  //   title: "Biometric Security Solutions",
+  //   description:
+  //     "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification. Replacing traditional passwords and PINs with physical and behavioral identifiers, we help businesses enhance security, streamline access control, and reduce fraud across sectors like law enforcement, healthcare, travel, and defense.",
+  //   icon: "/images/flaticon/svg/005-travel-4.svg",
+  // },
+  // {
+  //   title: "CCTV Surveillance",
+  //   description:
+  //     "Our CCTV Surveillance solutions deliver 24/7 real-time monitoring to enhance the safety of your property. Using advanced video camera systems, we enable live and recorded views of indoor and outdoor environments, helping to deter crime and safeguard your assets with dependable and scalable security systems.",
+  //   icon: "/images/flaticon/svg/006-food.svg",
+  // },
 ];
 
 export default function ServicesSection() {

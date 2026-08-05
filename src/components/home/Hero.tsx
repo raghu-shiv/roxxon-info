@@ -28,10 +28,10 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[#060a24]/60" />
       <div className="relative z-10 text-start">
         <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
-          Experienced for Every Kind of IT Solution
+          Experienced for Every Kind of IT and Workforce Solution
         </h1>
         <p className="text-lg md:text-xl max-w-2xl">
-          We provide innovative IT solutions for your business.
+          We provide innovative IT and Workforce solutions for your business.
         </p>
         <a
           href="/contact"

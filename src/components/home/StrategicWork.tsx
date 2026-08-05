@@ -29,6 +29,11 @@ const projects = [
     category: "UI/UX Strategy",
     title: "Strategy for Enduring Customer Relationships",
   },
+  {
+    image: "/images/work-4.jpg",
+    category: "Workforce Solutions",
+    title: "Workforce Solutions for Enhanced Productivity",
+  },
 ];
 
 export default function StrategicWork() {

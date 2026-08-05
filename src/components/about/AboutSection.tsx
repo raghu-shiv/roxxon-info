@@ -73,7 +73,7 @@ export default function AboutSection() {
               <li>Web & Mobile Application Development</li>
               <li>IT Infrastructure Management</li>
               <li>IT Consulting & Strategy</li>
-              <li>CCTV Surveillance system and Biometric systems</li>
+              <li>Workforce Solutions</li>
             </ul>
           </motion.div>
         </div>

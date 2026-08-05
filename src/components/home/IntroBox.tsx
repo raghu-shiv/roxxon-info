@@ -18,7 +18,7 @@ const introData = [
     icon: (
       <GiLightBulb className="text-white text-2xl sm:text-3xl md:text-4xl group-hover:text-amber transition-colors duration-300" />
     ),
-    text: "Product Design Strategy",
+    text: "Workforce Solutions",
     color: "bg-blue-1",
     hover: "hover:bg-secondary",
   },
