@@ -20,12 +20,24 @@ export const projects: Project[] = [
   {
     id: 2,
     name: "Paras LED",
-    url: "https://www.parasled.com/",
+    url: "",
     images: [
       "/images/paras_1.png",
       "/images/paras_2.png",
       "/images/paras_3.png",
       "/images/paras_4.png",
     ],
+  },
+  {
+    id: 3,
+    name: "YT Scripts",
+    url: "https://www.yt-scripts.online/",
+    images: ["/images/yt_scripts_1.png"],
+  },
+  {
+    id: 4,
+    name: "Jarvis AI",
+    url: "",
+    images: ["/images/jarvis_ai_1.png"],
   },
 ];
