@@ -180,6 +180,36 @@ const serviceDetails = [
       },
     ],
   },
+  {
+    title: "Workforce Solutions",
+    points: [
+      {
+        name: "IT Talent Outsourcing",
+        description:
+          "We help US startups scale quickly by providing dedicated remote IT professionals, including Full Stack Developers, Frontend Developers, Backend Developers, QA Engineers, DevOps Engineers, UI/UX Designers, and AI specialists. Our flexible engagement models reduce hiring time and operational costs.",
+      },
+      {
+        name: "IT Staffing & Recruitment",
+        description:
+          "We provide end-to-end IT staffing solutions across India, connecting businesses with highly skilled professionals for permanent, contractual, and project-based roles. Our rigorous screening process ensures every candidate aligns with your technical and business requirements.",
+      },
+      {
+        name: "Dedicated Development Teams",
+        description:
+          "Build an extension of your in-house team with dedicated developers who work exclusively on your projects. We manage talent acquisition, onboarding, and ongoing support, allowing you to focus on product innovation and business growth.",
+      },
+      {
+        name: "Contract & Project Staffing",
+        description:
+          "Whether you need short-term specialists or an entire project team, we provide experienced IT professionals for contract, contract-to-hire, and project-based engagements with rapid deployment and seamless integration.",
+      },
+      {
+        name: "Talent Management & HR Support",
+        description:
+          "Beyond recruitment, we assist with onboarding, workforce management, performance coordination, and employee engagement, ensuring a smooth experience for both clients and professionals throughout the engagement lifecycle.",
+      },
+    ],
+  },
 ];
 
 export default function ServiceDetailsPopUp({ service, onClose }: Props) {

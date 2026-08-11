@@ -35,7 +35,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Topbar - hidden on sm and below */}
+      {/* // Topbar - hidden on sm and below
       <div className="hidden md:block bg-midnight py-3 text-white text-sm">
         <div className="container mx-auto px-7 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-2 md:mb-0 text-center md:text-left">
@@ -67,7 +67,7 @@ export default function Header() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Navbar with animation */}
       <motion.nav

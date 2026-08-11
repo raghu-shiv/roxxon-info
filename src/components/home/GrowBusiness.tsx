@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { HiServerStack } from "react-icons/hi2";
+import { HiAcademicCap } from "react-icons/hi2";
 import { FaRegFileCode } from "react-icons/fa6";
 
 const GrowBusiness = () => {
@@ -19,8 +19,8 @@ const GrowBusiness = () => {
         >
           <div className="text-center max-w-2xl">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              We help <span className="text-primary">business</span> to grow
-              their <span className="text-primary">potential product</span>
+              Accelerate <span className="text-primary">Your Business</span>{" "}
+              with Tech <span className="text-primary">& Talent</span>
             </h2>
             <p className="text-gray-400 text-base sm:text-lg">
               We provide the best services for businesses
@@ -42,10 +42,11 @@ const GrowBusiness = () => {
               <FaRegFileCode />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-gray-700">
-              Web Development
+              Software Solutions
             </h3>
             <p className="text-gray-400 text-sm sm:text-base lg:text-lg px-1 sm:px-2">
-              Our team is highly skilled and experienced in website development.
+              Our IT team is highly skilled and experienced in software
+              development.
             </p>
           </motion.div>
 
@@ -75,14 +76,14 @@ const GrowBusiness = () => {
             className="text-center px-2 sm:px-4"
           >
             <div className="flex justify-center text-primary text-5xl sm:text-6xl md:text-7xl mb-4">
-              <HiServerStack />
+              <HiAcademicCap />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-gray-700">
-              Server Security
+              Workforce Solutions
             </h3>
             <p className="text-gray-400 text-sm sm:text-base lg:text-lg px-1 sm:px-2">
-              Ensure smooth operations, cyber security and scalability driving
-              business success through effective management.
+              Our Workforce Solutions team connects businesses with skilled
+              professionals across diverse industries.
             </p>
           </motion.div>
         </div>

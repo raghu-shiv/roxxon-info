@@ -3,9 +3,9 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 const counters = [
-  { number: 30, label: "Project Complete" },
-  { number: 20, label: "Active Clients" },
-  { number: 25, label: "Business Partners" },
+  { number: 40, label: "Project Complete" },
+  { number: 25, label: "Active Clients" },
+  { number: 15, label: "Business Partners" },
   { number: 5, label: "Glorious Years" },
 ];
 
@@ -22,7 +22,7 @@ const ConsultCounter = () => {
           setHasAnimated(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     if (sectionRef.current) {
@@ -40,7 +40,9 @@ const ConsultCounter = () => {
 
     const interval = setInterval(() => {
       setCount((prev) =>
-        prev.map((val, index) => (val < counters[index].number ? val + 1 : val))
+        prev.map((val, index) =>
+          val < counters[index].number ? val + 1 : val,
+        ),
       );
     }, 50);
 

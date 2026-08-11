@@ -40,4 +40,10 @@ export const projects: Project[] = [
     url: "",
     images: ["/images/jarvis_ai_1.png"],
   },
+  {
+    id: 5,
+    name: "ERP POS",
+    url: "",
+    images: ["/images/erp_pos_1.png"],
+  },
 ];

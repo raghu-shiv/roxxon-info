@@ -24,7 +24,7 @@ const WhatsAppContactForm = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -55,7 +55,7 @@ const WhatsAppContactForm = () => {
 Name: ${name}
 Email: ${email}
 Service Interested: ${service}
-Message: ${message}`
+Message: ${message}`,
     )}`;
 
     window.open(url, "_blank");
@@ -125,8 +125,7 @@ Message: ${message}`
                   "Mobile App Development",
                   "IT Infrastructure Management",
                   "Annual Maintenance Contract",
-                  "Biometric Security Solutions",
-                  "CCTV Surveillance",
+                  "Workforce Solutions",
                 ].map((s, i) => (
                   <option key={i} className="text-black">
                     {s}

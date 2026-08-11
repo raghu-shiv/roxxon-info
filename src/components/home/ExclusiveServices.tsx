@@ -2,30 +2,31 @@
 import React from "react";
 import { FaRegFileCode, FaFingerprint } from "react-icons/fa6";
 import { GiWizardStaff } from "react-icons/gi";
-import { HiServerStack } from "react-icons/hi2";
+import { HiAcademicCap, HiServerStack } from "react-icons/hi2";
 import { motion } from "framer-motion";
+import { PiDeviceMobile } from "react-icons/pi";
 
 const services = [
   {
     icon: <FaRegFileCode />,
-    title: "Web Development",
+    title: "Software Development",
     desc: "Our Web Designing services focus on crafting responsive, visually stunning, and conversion-oriented websites to engage users.",
   },
   {
-    icon: <GiWizardStaff />,
+    icon: <HiAcademicCap />,
     title: "Workforce Solutions",
     desc: "Our Workforce Solutions provide comprehensive tools to optimize employee productivity, streamline operations, and enhance overall organizational efficiency.",
   },
   {
-    icon: <HiServerStack />,
-    title: "Server Security",
-    desc: "From networks and servers to endpoint devices, we oversee every layer of infrastructure with a focus on operational efficiency and cybersecurity.",
+    icon: <PiDeviceMobile />,
+    title: "Mobile App Development",
+    desc: "From user-centric design to robust cross-platform development, we deliver mobile applications engineered for speed, scalability, and long-term success.",
   },
-  // {
-  //   icon: <FaFingerprint />,
-  //   title: "Biometrics",
-  //   desc: "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification.",
-  // },
+  {
+    icon: <HiServerStack />,
+    title: "IT Infrastructure Management",
+    desc: "From networks and cloud environments to servers and end-user systems, we manage your IT infrastructure to ensure maximum performance, reliability, and security.",
+  },
 ];
 
 const boxVariants = {
@@ -45,8 +46,7 @@ const ExclusiveServices = () => {
       <div className="container mx-auto px-4 sm:px-8 md:px-12 lg:px-20 xl:px-44">
         <div className="text-center pb-10 max-w-xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Our Exclusive <span className="text-primary">IT Solution</span>{" "}
-            Services
+            Our Exclusive <span className="text-primary">Services</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
