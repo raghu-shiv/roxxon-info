@@ -1,19 +1,23 @@
 import { z } from "zod";
 
 export const contactFormSchema = z.object({
-  name: z.string().min(3, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  subject: z.string().min(5, "Subject is required"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  name: z.string().trim().min(3, "Please enter your full name."),
+
+  email: z
+    .string()
+    .trim()
+    .email("Please enter a valid email address.")
+    .or(z.literal("")),
+
+  service: z.string().min(1, "Please select a service."),
+
+  budget: z.string().optional(),
+
+  message: z
+    .string()
+    .trim()
+    .min(20, "Please describe your project in at least 20 characters.")
+    .max(2000, "Project description cannot exceed 2000 characters."),
 });
 
-export type ContactFormData = z.infer<typeof contactFormSchema>;
-
-export const whatsAppContactSchema = z.object({
-  name: z.string().min(3, "Name is required"),
-  email: z.string().optional(),
-  service: z.string().min(5),
-  message: z.string().min(10, "Message should be more descriptive"),
-});
-
-export type WhatsAppContactData = z.infer<typeof whatsAppContactSchema>;
+export type ConsultationFormData = z.infer<typeof contactFormSchema>;

@@ -1,23 +1,25 @@
-import ConsultCounter from "@/components/home/ConsultCounter";
-import WhatsAppContactForm from "@/components/home/WhatsAppContactForm";
-import ExclusiveServices from "@/components/home/ExclusiveServices";
-import GrowBusiness from "@/components/home/GrowBusiness";
 import Hero from "@/components/home/Hero";
-// import StrategicWork from "@/components/home/StrategicWork";
-// import Testimonials from "@/components/home/Testimonials";
-import Projects from "@/components/home/Projects";
+import WhoWeAre from "@/components/home/WhoWeAre";
+import CoreServices from "@/components/home/CoreServices";
+import TechnologyRibbon from "@/components/home/TechnologyRibbon";
+import WhyRoxxon from "@/components/home/WhyRoxxon";
+import FeaturedProjects from "@/components/home/FeaturedProjects";
+import ContactSection from "@/components/home/ContactSection";
+import ConsultationForm from "@/components/home/ConsultationForm";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <GrowBusiness />
-      <ConsultCounter />
-      <ExclusiveServices />
-      {/* <StrategicWork /> */}
-      {/* <Testimonials /> */}
-      <Projects />
-      <WhatsAppContactForm />
+      <WhoWeAre />
+      <CoreServices />
+      <div className="-mt-12 relative z-10">
+        <TechnologyRibbon />
+      </div>
+      <WhyRoxxon />
+      <FeaturedProjects />
+      <ContactSection />
+      <ConsultationForm />
     </main>
   );
 }

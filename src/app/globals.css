@@ -8,3 +8,36 @@
   --color-amber: #ffa41b;
   --color-midnight: #090f35;
 }
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.marquee-left {
+  animation: marquee-left var(--duration) linear infinite;
+}
+
+.marquee-right {
+  animation: marquee-right var(--duration) linear infinite;
+}
+
+.marquee-container:hover .marquee-left,
+.marquee-container:hover .marquee-right {
+  animation-play-state: paused;
+}
