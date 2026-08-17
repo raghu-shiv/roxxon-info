@@ -1,40 +1,87 @@
+import React from "react";
+import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { EmailTemplate } from "@/components/contact/EmailTemplate";
 import { contactFormSchema } from "@/lib/validation/contactFormSchema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
+    if (!process.env.RESEND_API_KEY) {
+      console.error("Missing RESEND_API_KEY");
 
-    // ✅ Validate form data using Zod
-    const parsed = contactFormSchema.safeParse(body);
-
-    if (!parsed.success) {
-      return Response.json(
-        { errors: parsed.error.flatten().fieldErrors },
-        { status: 400 }
+      return NextResponse.json(
+        {
+          error: "Email service is not configured.",
+        },
+        {
+          status: 500,
+        },
       );
     }
 
-    const { name, email, subject, message } = parsed.data;
+    const body = await request.json();
 
-    const { error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: ["roxxoninfotech@gmail.com"],
-      subject: subject,
-      react: await EmailTemplate({ name, email, message }),
-    });
+    const validation = contactFormSchema.safeParse(body);
 
-    if (error) {
-      console.error("Resend API error:", error);
-      return Response.json({ error: "Failed to send email." }, { status: 500 });
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          errors: validation.error.flatten().fieldErrors,
+        },
+        {
+          status: 400,
+        },
+      );
     }
 
-    return Response.json({ success: true });
+    const { name, email, service, budget, message } = validation.data;
+
+    const response = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL!,
+      to: [process.env.CONTACT_EMAIL!],
+
+      subject: `🚀 New Consultation Request • ${service}`,
+
+      react: React.createElement(EmailTemplate, {
+        name,
+        email,
+        service,
+        budget,
+        message,
+      }),
+    });
+
+    if (response.error) {
+      console.error(response.error);
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Unable to send email.",
+        },
+        {
+          status: 500,
+        },
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+    });
   } catch (error) {
-    console.error("API error:", error);
-    return Response.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Internal server error.",
+      },
+      {
+        status: 500,
+      },
+    );
   }
 }
