@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Lock } from "lucide-react";
+import { ArrowUpRight, Lock, Sparkles } from "lucide-react";
 
 import { Project } from "@/lib/data/projects";
 import TechnologyChip from "./TechnologyChip";
@@ -18,112 +17,116 @@ export default function ProjectCard({
   project,
   featured = false,
 }: ProjectCardProps) {
-  return (
-    <motion.article
-      layout
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.25 }}
-      className={`
-        group
-        relative
-        overflow-hidden
-        rounded-3xl
-        border
-        border-white/10
-        bg-slate-900
-        shadow-xl
-        ${
-          featured
-            ? "lg:col-span-7 lg:row-span-2 min-h-[650px]"
-            : "min-h-[320px]"
-        }
-      `}
-    >
-      {/* Image */}
+  const projectLinkClass =
+    "inline-flex min-h-11 items-center gap-2 rounded-lg font-semibold text-cyan-300 transition-colors hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 motion-reduce:transition-none";
 
-      <div className="absolute inset-0">
+  return (
+    <article
+      className={[
+        "group relative h-full overflow-hidden rounded-3xl border border-white/10",
+        "bg-slate-900/80 shadow-lg shadow-black/10",
+        "transition-[border-color,box-shadow,transform] duration-300",
+        "hover:border-cyan-400/30 hover:shadow-xl hover:shadow-cyan-950/20",
+        "motion-reduce:transform-none motion-reduce:transition-none",
+        featured ? "lg:grid lg:grid-cols-[1.15fr_0.85fr]" : "flex flex-col",
+      ].join(" ")}
+    >
+      <div
+        className={[
+          "relative isolate overflow-hidden bg-slate-800",
+          featured
+            ? "aspect-[16/10] lg:aspect-auto lg:min-h-[440px]"
+            : "aspect-[16/10]",
+        ].join(" ")}
+      >
         <Image
           src={project.images[0]}
-          alt={project.name}
+          alt={`${project.name} project screenshot`}
           fill
-          className="object-cover transition duration-700 group-hover:scale-105"
+          priority={featured}
+          sizes={
+            featured
+              ? "(min-width: 1024px) 58vw, 100vw"
+              : "(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"
+          }
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transform-none motion-reduce:transition-none"
         />
-      </div>
 
-      {/* Overlay */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-slate-950/10"
+        />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/10" />
-
-      {/* Content */}
-
-      <div className="relative flex h-full flex-col justify-end p-8">
-        {/* Top */}
-
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-full bg-cyan-500 px-4 py-2 text-xs font-semibold text-white">
+        <div className="absolute left-4 top-4 flex flex-wrap gap-2 sm:left-5 sm:top-5">
+          <span className="rounded-full border border-cyan-300/25 bg-slate-950/85 px-3 py-1.5 text-xs font-semibold text-cyan-200 backdrop-blur-md">
             {project.category}
           </span>
-
-          <StatusBadge status={project.status} />
+          {featured && (
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-slate-950/80 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
+              <Sparkles size={13} className="text-cyan-300" />
+              Featured
+            </span>
+          )}
         </div>
 
-        {/* Title */}
+        <div className="absolute right-4 top-4 sm:right-5 sm:top-5">
+          <StatusBadge status={project.status} />
+        </div>
+      </div>
+
+      <div
+        className={[
+          "flex min-w-0 flex-1 flex-col p-5 sm:p-7",
+          featured ? "lg:justify-center lg:p-8 xl:p-10" : "",
+        ].join(" ")}
+      >
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
+          {project.category}
+        </p>
 
         <h3
-          className={`mt-6 font-black text-white ${
-            featured ? "text-4xl" : "text-2xl"
-          }`}
+          className={[
+            "mt-3 font-bold tracking-tight text-white",
+            featured ? "text-3xl sm:text-4xl" : "text-2xl",
+          ].join(" ")}
         >
           {project.name}
         </h3>
 
-        {/* Description */}
-
-        <p
-          className={`mt-5 text-slate-300 ${
-            featured ? "max-w-2xl leading-8" : "line-clamp-3 leading-7"
-          }`}
-        >
+        <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
           {project.description}
         </p>
 
-        {/* Technologies */}
-
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-5 flex flex-wrap gap-2">
           {project.technologies.map((technology) => (
             <TechnologyChip key={technology.id} technology={technology} />
           ))}
         </div>
 
-        {/* Footer */}
-
-        <div className="mt-8 flex items-center justify-between">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5 mt-6">
           {project.url ? (
             <Link
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-semibold text-cyan-400 transition-all duration-300 group-hover:gap-4"
+              aria-label={`Visit ${project.name} (opens in a new tab)`}
+              className={projectLinkClass}
             >
               Visit Project
               <ArrowUpRight size={18} />
             </Link>
           ) : (
-            <div className="inline-flex items-center gap-2 text-slate-400">
-              <Lock size={18} />
+            <span className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-slate-400">
+              <Lock size={17} aria-hidden="true" />
               Private Project
-            </div>
+            </span>
           )}
 
-          <div className="text-right">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
-              Project
-            </p>
-
-            <p className="mt-1 font-semibold text-white">{project.category}</p>
-          </div>
+          <span className="text-xs font-medium text-slate-500">
+            {project.status === "Live" ? "Live project" : "Portfolio preview"}
+          </span>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

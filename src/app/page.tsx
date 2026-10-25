@@ -5,7 +5,6 @@ import TechnologyRibbon from "@/components/home/TechnologyRibbon";
 import WhyRoxxon from "@/components/home/WhyRoxxon";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import ContactSection from "@/components/home/ContactSection";
-import ConsultationForm from "@/components/home/ConsultationForm";
 
 export default function Home() {
   return (
@@ -13,13 +12,12 @@ export default function Home() {
       <Hero />
       <WhoWeAre />
       <CoreServices />
-      <div className="-mt-12 relative z-10">
-        <TechnologyRibbon />
-      </div>
       <WhyRoxxon />
       <FeaturedProjects />
       <ContactSection />
-      <ConsultationForm />
+      <div className="-mt-12 relative z-10">
+        <TechnologyRibbon />
+      </div>
     </main>
   );
 }

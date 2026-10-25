@@ -20,21 +20,14 @@ export default function TechnologyChip({ technology }: Props) {
         duration: 0.2,
       }}
       className="
-        group
-        inline-flex
-        items-center
-        gap-3
-        rounded-full
-        border
-        border-white/10
-        bg-white/5
-        px-4
-        py-2
-        backdrop-blur-xl
-        transition-all
-        hover:border-cyan-400/40
-        hover:bg-cyan-500/10
-      "
+  inline-flex min-h-11 items-center gap-2
+  font-semibold text-cyan-300
+  transition-colors hover:text-cyan-200
+  focus-visible:outline-none focus-visible:ring-2
+  focus-visible:ring-cyan-300 focus-visible:ring-offset-2
+  focus-visible:ring-offset-slate-900
+  motion-reduce:transition-none
+"
     >
       <Icon
         size={18}
@@ -43,7 +36,9 @@ export default function TechnologyChip({ technology }: Props) {
         }}
       />
 
-      <span className="text-sm font-medium text-white">{technology.name}</span>
+      <span className="text-sm font-medium text-slate-100">
+        {technology.name}
+      </span>
     </motion.div>
   );
 }

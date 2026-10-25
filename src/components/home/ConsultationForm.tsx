@@ -3,10 +3,9 @@
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Clock3 } from "lucide-react";
 
-import GlassCard from "@/components/ui/GlassCard";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
@@ -22,6 +21,8 @@ import {
 } from "@/lib/validation/contactFormSchema";
 
 export default function ConsultationForm() {
+  const reduceMotion = useReducedMotion();
+
   const {
     register,
     handleSubmit,
@@ -95,7 +96,7 @@ export default function ConsultationForm() {
   };
 
   return (
-    <GlassCard className="relative overflow-hidden p-8 lg:p-10">
+    <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl shadow-slate-900/10 sm:p-8 lg:p-10">
       {/* Background Glow */}
 
       <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-cyan-100 blur-[120px]" />
@@ -180,21 +181,9 @@ export default function ConsultationForm() {
 
           {consultation && (
             <motion.div
-              initial={{
-                opacity: 0,
-                y: 12,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              className="
-                rounded-2xl
-                border
-                border-cyan-200
-                bg-cyan-50
-                p-5
-              "
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              className="rounded-2xl border border-cyan-200 bg-cyan-50 p-5"
             >
               <div className="flex items-center gap-4">
                 <div className="rounded-xl bg-cyan-500/10 p-3">
@@ -312,6 +301,6 @@ export default function ConsultationForm() {
           </div>
         </form>
       </div>
-    </GlassCard>
+    </div>
   );
 }

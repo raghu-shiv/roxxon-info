@@ -1,642 +1,315 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import CountUp from "react-countup";
-import { motion, AnimatePresence } from "framer-motion";
-
+import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   BrainCircuit,
   CheckCircle2,
-  BadgeCheck,
   Cloud,
   Code2,
-  Users,
+  Layers3,
   Sparkles,
+  Users,
+  Workflow,
 } from "lucide-react";
-
 import {
-  SiReact,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiPython,
-  SiDocker,
-  SiOpenai,
   SiAmazonwebservices,
+  SiNextdotjs,
+  SiOpenai,
+  SiReact,
 } from "react-icons/si";
-
-import Button from "@/components/ui/Button";
-import GlassCard from "@/components/ui/GlassCard";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 40,
+const container: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
   },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.7,
-      ease,
-    },
+    transition: { duration: 0.65, ease },
   },
 };
 
-const stagger = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
+const capabilities = [
+  {
+    icon: Code2,
+    title: "Software Engineering",
+    detail: "Web apps, SaaS and enterprise platforms",
+    color: "from-cyan-500 to-blue-500",
   },
-};
-
-const trustItems = [
-  "Startup Focused",
-  "USA & India",
-  "AI Assisted",
-  "Cloud Ready",
-];
-
-const services = [
-  "Software Development",
-  "Workforce Solutions",
-  "AI Solutions",
-  "Cloud Engineering",
+  {
+    icon: Users,
+    title: "Workforce Solutions",
+    detail: "Technical staffing and dedicated teams",
+    color: "from-violet-500 to-indigo-500",
+  },
+  {
+    icon: BrainCircuit,
+    title: "AI & Automation",
+    detail: "Intelligent products and workflows",
+    color: "from-emerald-500 to-teal-500",
+  },
+  {
+    icon: Cloud,
+    title: "Cloud Engineering",
+    detail: "Cloud infrastructure and DevOps",
+    color: "from-orange-500 to-pink-500",
+  },
 ];
 
 const technologies = [
-  {
-    name: "React",
-    icon: SiReact,
-  },
-  {
-    name: "Next.js",
-    icon: SiNextdotjs,
-  },
-  {
-    name: "Node.js",
-    icon: SiNodedotjs,
-  },
-  {
-    name: "Python",
-    icon: SiPython,
-  },
-  {
-    name: "AWS",
-    icon: SiAmazonwebservices,
-  },
-  {
-    name: "Docker",
-    icon: SiDocker,
-  },
-  {
-    name: "OpenAI",
-    icon: SiOpenai,
-  },
-];
-
-const dashboardStats = [
-  {
-    title: "Engineering",
-    value: "Software",
-    icon: Code2,
-  },
-  {
-    title: "Delivery",
-    value: "USA + India",
-    icon: Cloud,
-  },
-  {
-    title: "Hiring",
-    value: "AI Powered",
-    icon: BrainCircuit,
-  },
-];
-
-const aiInsights = [
-  {
-    title: "AI matched 24 software engineers",
-    description: "Based on your technology stack and hiring requirements.",
-  },
-  {
-    title: "Cloud migration specialists available",
-    description: "Certified AWS and Azure engineers ready for deployment.",
-  },
-  {
-    title: "New React talent identified",
-    description: "Senior frontend developers available immediately.",
-  },
-  {
-    title: "Hiring pipeline updated",
-    description: "15 qualified candidates ready for client interviews.",
-  },
+  { name: "React", Icon: SiReact },
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "AWS", Icon: SiAmazonwebservices },
+  { name: "OpenAI", Icon: SiOpenai },
 ];
 
 export default function Hero() {
-  const [activeInsight, setActiveInsight] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveInsight((prev) => (prev + 1) % aiInsights.length);
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative overflow-hidden bg-slate-950">
-      {/* Animated Grid */}
+    <section className="relative isolate overflow-hidden bg-slate-950">
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-40 top-0 h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[140px]" />
+        <div className="absolute -right-32 top-20 h-[500px] w-[500px] rounded-full bg-cyan-500/15 blur-[140px]" />
+        <div className="absolute bottom-0 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-indigo-500/15 blur-[120px]" />
 
-      <motion.div
-        animate={{
-          backgroundPosition: ["0px 0px", "80px 80px"],
-        }}
-        transition={{
-          duration: 45,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,#ffffff 1px,transparent 1px),linear-gradient(to bottom,#ffffff 1px,transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+        <div
+          className="absolute inset-0 opacity-[0.045]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right,#fff 1px,transparent 1px),linear-gradient(to bottom,#fff 1px,transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
 
-      {/* Gradient Orbs */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950 to-transparent" />
+      </div>
 
-      <motion.div
-        animate={{
-          x: [0, 60, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-        }}
-        className="absolute left-0 top-20 h-[500px] w-[500px] rounded-full bg-cyan-500/15 blur-[150px]"
-      />
+      {/* Floating technology markers */}
+      {[
+        { Icon: Code2, top: "19%", left: "5%" },
+        { Icon: BrainCircuit, top: "23%", right: "5%" },
+        { Icon: Workflow, bottom: "16%", left: "8%" },
+        { Icon: Layers3, bottom: "15%", right: "7%" },
+      ].map(({ Icon, ...position }, index) => (
+        <motion.div
+          key={index}
+          className="absolute z-0 hidden lg:block"
+          style={position}
+          animate={{ y: [0, -12, 0] }}
+          transition={{
+            duration: 4 + index,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-xl backdrop-blur-xl">
+            <Icon size={25} className="text-cyan-400" />
+          </div>
+        </motion.div>
+      ))}
 
-      <motion.div
-        animate={{
-          x: [0, -50, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-        }}
-        className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[150px]"
-      />
-
-      <motion.div
-        animate={{
-          x: [0, 30, 0],
-          y: [0, -30, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-        }}
-        className="absolute bottom-0 left-1/2 h-[350px] w-[350px] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[130px]"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-40 lg:px-8">
-        <div className="grid items-center gap-20 lg:grid-cols-2">
-          {/* LEFT CONTENT */}
-
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
-            className="relative"
-          >
-            {/* Badge */}
-
-            <motion.div variants={fadeUp}>
-              <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/10 px-5 py-2 text-sm font-medium text-cyan-300 backdrop-blur-xl">
+      <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-32 sm:pt-36 lg:px-8 lg:pb-28 lg:pt-40">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16"
+        >
+          {/* Left: positioning and calls to action */}
+          <div>
+            <motion.div variants={item}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300">
                 <Sparkles size={16} />
-                Building Digital Products & Engineering Teams
+                Technology. Talent. Transformation.
               </span>
             </motion.div>
 
-            {/* Heading */}
-
-            <motion.div variants={fadeUp} className="mt-8">
-              <h1 className="text-5xl font-black leading-[1.05] tracking-tight text-white lg:text-7xl">
-                <motion.span
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    ease,
-                  }}
-                  className="block"
-                >
-                  Building
-                </motion.span>
-
-                <motion.span
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 0.15,
-                    duration: 0.6,
-                    ease,
-                  }}
-                  className="block"
-                >
-                  Digital Products
-                </motion.span>
-
-                <motion.span
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 0.3,
-                    duration: 0.6,
-                    ease,
-                  }}
-                  className="block bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent"
-                >
-                  & Engineering Teams
-                </motion.span>
-              </h1>
-            </motion.div>
-
-            {/* Description */}
+            <motion.h1
+              variants={item}
+              className="mt-8 text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl"
+            >
+              Build What&apos;s
+              <span className="block">Next with</span>
+              <span className="block bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent">
+                Roxxon.
+              </span>
+            </motion.h1>
 
             <motion.p
-              variants={fadeUp}
-              className="mt-8 max-w-2xl text-lg leading-8 text-slate-300"
+              variants={item}
+              className="mt-7 max-w-xl text-base leading-8 text-slate-300 sm:text-lg"
             >
-              Roxxon partners with startups and growing businesses to deliver
-              modern software solutions, AI-powered digital products, cloud
-              engineering, and technology workforce solutions that accelerate
-              innovation and business growth.
+              From modern software products and AI-powered solutions to
+              high-performing engineering teams, we help ambitious businesses
+              turn complex technology challenges into meaningful progress.
             </motion.p>
 
-            {/* CTA */}
-
-            <motion.div
-              variants={fadeUp}
-              className="mt-10 flex flex-wrap gap-5"
-            >
-              <Button
+            <motion.div variants={item} className="mt-9 flex flex-wrap gap-4">
+              <Link
                 href="/services"
-                className="shadow-cyan-500/40 hover:shadow-cyan-500/70"
+                className="group inline-flex items-center gap-3 rounded-xl bg-cyan-400 px-6 py-4 font-semibold text-slate-950 transition hover:bg-cyan-300"
               >
-                Explore Services
-              </Button>
+                Explore Our Services
+                <ArrowRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </Link>
 
-              <Button href="/contact">Book Consultation</Button>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-3 rounded-xl border border-white/20 bg-white/[0.03] px-6 py-4 font-semibold text-white transition hover:border-cyan-400/50 hover:bg-white/10"
+              >
+                Talk to Our Team
+                <ArrowRight size={18} />
+              </Link>
             </motion.div>
 
-            {/* Trust Bar */}
-
             <motion.div
-              variants={fadeUp}
-              className="mt-8 flex flex-wrap gap-x-6 gap-y-3"
+              variants={item}
+              className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-slate-300"
             >
-              {trustItems.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-2 text-sm text-slate-400"
-                >
+              {[
+                "Modern Engineering",
+                "AI-Assisted Solutions",
+                "Flexible Talent Models",
+              ].map((value) => (
+                <span key={value} className="inline-flex items-center gap-2">
                   <CheckCircle2 size={16} className="text-cyan-400" />
-
-                  {item}
-                </div>
+                  {value}
+                </span>
               ))}
             </motion.div>
 
-            {/* Services */}
-
-            <motion.div
-              variants={fadeUp}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              {services.map((service) => (
-                <motion.div
-                  key={service}
-                  whileHover={{
-                    y: -4,
-                    scale: 1.02,
-                  }}
-                  className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white backdrop-blur-xl transition"
-                >
-                  {service}
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Technology Logos */}
-
-            <motion.div variants={fadeUp} className="mt-12">
-              <p className="mb-5 text-sm uppercase tracking-[0.2em] text-slate-500">
-                Technologies We Work With
+            <motion.div variants={item} className="mt-10">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Technologies we work with
               </p>
 
-              <div className="flex flex-wrap gap-4">
-                {technologies.map((tech) => {
-                  const Icon = tech.icon;
-
-                  return (
-                    <motion.div
-                      key={tech.name}
-                      whileHover={{
-                        y: -5,
-                        scale: 1.08,
-                      }}
-                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl transition-all"
-                    >
-                      <Icon
-                        size={22}
-                        className="text-slate-300 transition group-hover:text-cyan-400"
-                      />
-
-                      <span className="font-medium text-slate-200">
-                        {tech.name}
-                      </span>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-            {/* Experience Card */}
-
-            <motion.div variants={fadeUp} className="mt-12">
-              <GlassCard className="flex items-center justify-between p-6">
-                <div>
-                  <p className="text-sm text-slate-400">Experience Across</p>
-
-                  <h3 className="mt-2 text-2xl font-bold text-white">
-                    Software Engineering & Talent Solutions
-                  </h3>
-                </div>
-
-                <div className="text-right">
-                  <div className="text-5xl font-black text-cyan-400">
-                    <CountUp end={10} duration={2} />+
-                  </div>
-
-                  <p className="text-sm text-slate-400">
-                    Combined Team Experience
-                  </p>
-                </div>
-              </GlassCard>
-            </motion.div>
-          </motion.div>
-          {/* RIGHT */}
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="relative"
-          >
-            {/* Floating Badge */}
-
-            <motion.div
-              animate={{
-                y: [0, -10, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease,
-              }}
-              className="absolute -top-5 right-6 z-20 hidden lg:block"
-            >
-              <div className="rounded-full border border-cyan-500/20 bg-cyan-500/10 px-5 py-3 text-sm font-semibold text-cyan-300 backdrop-blur-xl shadow-xl">
-                🚀 Delivering Innovation
-              </div>
-            </motion.div>
-
-            <GlassCard className="relative overflow-hidden p-8">
-              {/* Glow */}
-
-              <div className="absolute -right-28 -top-28 h-64 w-64 rounded-full bg-cyan-500/20 blur-[120px]" />
-
-              {/* Header */}
-
-              <div className="relative flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-slate-400">
-                    Technology Delivery Dashboard
-                  </p>
-
-                  <h3 className="mt-2 text-2xl font-bold text-white">
-                    Roxxon Intelligence
-                  </h3>
-                </div>
-
-                <div className="rounded-full bg-green-500/20 px-4 py-2 text-sm font-semibold text-green-400">
-                  Online
-                </div>
-              </div>
-
-              {/* Dashboard Stats */}
-
-              <div className="mt-10 grid grid-cols-3 gap-5">
-                {dashboardStats.map((item) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <motion.div
-                      key={item.title}
-                      whileHover={{
-                        y: -5,
-                        scale: 1.03,
-                      }}
-                      className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
-                    >
-                      <div className="inline-flex rounded-xl bg-cyan-500/10 p-3">
-                        <Icon size={22} className="text-cyan-400" />
-                      </div>
-
-                      <h4 className="mt-5 text-lg font-bold text-white">
-                        {item.value}
-                      </h4>
-
-                      <p className="mt-2 text-sm text-slate-400">
-                        {item.title}
-                      </p>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* Progress */}
-
-              <div className="mt-10 space-y-8">
-                {[
-                  {
-                    title: "Software Engineering",
-                    status: "Active",
-                  },
-                  {
-                    title: "Cloud Engineering",
-                    status: "Available",
-                  },
-                  {
-                    title: "AI Workforce",
-                    status: "Enabled",
-                  },
-                ].map((item) => (
-                  <div key={item.title}>
-                    <div className="mb-3 flex justify-between">
-                      <span className="font-medium text-slate-300">
-                        {item.title}
-                      </span>
-
-                      <span className="font-semibold text-cyan-400">
-                        {item.status}
-                      </span>
-                    </div>
-
-                    <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                      <motion.div
-                        initial={{
-                          width: 0,
-                        }}
-                        animate={{
-                          width: `${item.status}`,
-                        }}
-                        transition={{
-                          duration: 1.2,
-                          ease,
-                        }}
-                        className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
-                      />
-                    </div>
+              <div className="flex flex-wrap gap-3">
+                {technologies.map(({ name, Icon }) => (
+                  <div
+                    key={name}
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/30 hover:bg-cyan-500/10"
+                  >
+                    <Icon size={19} className="text-cyan-400" />
+                    {name}
                   </div>
                 ))}
               </div>
+            </motion.div>
+          </div>
 
-              {/* Rotating AI Insight */}
+          {/* Right: capability panel */}
+          <motion.div variants={item} className="relative">
+            <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-indigo-500/10 blur-2xl" />
 
-              <div className="mt-10 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-6">
-                <div className="flex items-center gap-3">
-                  <BrainCircuit className="text-cyan-400" size={22} />
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/75 p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8">
+              <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full bg-cyan-500/10 blur-[90px]" />
 
-                  <span className="font-semibold text-white">
-                    AI Recommendation
+              <div className="relative flex items-start justify-between gap-4">
+                <div>
+                  <span className="text-sm font-medium text-cyan-300">
+                    Roxxon capabilities
                   </span>
+                  <h2 className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+                    One partner.
+                    <span className="block text-slate-300">
+                      Multiple possibilities.
+                    </span>
+                  </h2>
                 </div>
 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeInsight}
-                    initial={{
-                      opacity: 0,
-                      y: 20,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: -20,
-                    }}
-                    transition={{
-                      duration: 0.4,
-                    }}
-                  >
-                    <h4 className="mt-5 text-lg font-semibold text-white">
-                      {aiInsights[activeInsight].title}
-                    </h4>
-
-                    <p className="mt-3 leading-7 text-slate-300">
-                      {aiInsights[activeInsight].description}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
+                <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-3">
+                  <Layers3 size={25} className="text-cyan-300" />
+                </div>
               </div>
 
-              {/* Capability Cards */}
+              <div className="relative mt-8 space-y-3">
+                {capabilities.map(
+                  ({ icon: Icon, title, detail, color }, index) => (
+                    <motion.div
+                      key={title}
+                      initial={{ opacity: 0, x: 16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.09, duration: 0.45 }}
+                      whileHover={{ x: 4 }}
+                      className="group flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 transition hover:border-cyan-400/25 hover:bg-white/[0.06] sm:p-5"
+                    >
+                      <div
+                        className={`shrink-0 rounded-xl bg-gradient-to-br ${color} p-3 text-white shadow-lg`}
+                      >
+                        <Icon size={23} />
+                      </div>
 
-              <div className="mt-10 grid grid-cols-2 gap-5">
-                <motion.div
-                  whileHover={{
-                    y: -5,
-                  }}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-5"
-                >
-                  <div className="flex items-center gap-3">
-                    <BadgeCheck className="text-green-400" size={22} />
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-white">{title}</h3>
+                        <p className="mt-1 text-sm leading-6 text-slate-400">
+                          {detail}
+                        </p>
+                      </div>
 
-                    <div>
-                      <h4 className="font-semibold text-white">
-                        Enterprise Ready
-                      </h4>
-
-                      <p className="text-sm text-slate-400">
-                        Secure & Scalable
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  whileHover={{
-                    y: -5,
-                  }}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-5"
-                >
-                  <div className="flex items-center gap-3">
-                    <Users className="text-cyan-400" size={22} />
-
-                    <div>
-                      <h4 className="font-semibold text-white">
-                        Engineering Teams
-                      </h4>
-
-                      <p className="text-sm text-slate-400">Ready to Scale</p>
-                    </div>
-                  </div>
-                </motion.div>
+                      <ArrowRight
+                        size={18}
+                        className="shrink-0 text-slate-500 transition group-hover:translate-x-1 group-hover:text-cyan-400"
+                      />
+                    </motion.div>
+                  ),
+                )}
               </div>
 
-              {/* Bottom */}
-
-              <div className="mt-10 rounded-2xl bg-slate-900/60 p-5">
-                <div className="flex items-center justify-between">
+              <div className="relative mt-6 rounded-2xl border border-cyan-400/15 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-5 sm:p-6">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-xl bg-cyan-400/10 p-2.5">
+                    <BrainCircuit size={21} className="text-cyan-300" />
+                  </div>
                   <div>
-                    <p className="text-sm text-slate-400">
-                      Let's build your next product.
+                    <p className="font-semibold text-white">
+                      Built around your goals
                     </p>
-
-                    <h4 className="mt-1 text-lg font-bold text-white">
-                      Software • AI • Workforce
-                    </h4>
+                    <p className="mt-1 text-sm text-slate-400">
+                      Practical solutions. Collaborative delivery.
+                    </p>
                   </div>
-
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400"
-                  >
-                    Get Started
-                    <ArrowRight size={18} />
-                  </Link>
                 </div>
+
+                <Link
+                  href="/contact"
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200"
+                >
+                  Discuss your project
+                  <ArrowRight size={16} />
+                </Link>
               </div>
-            </GlassCard>
+            </div>
+
+            <motion.div
+              animate={{ y: [0, -7, 0] }}
+              transition={{
+                duration: 4.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="relative mt-4 ml-auto hidden w-fit rounded-xl border border-white/10 bg-slate-900/90 px-5 py-3 shadow-xl sm:block"
+            >
+              <p className="text-sm text-slate-300">
+                <span className="mr-2 text-cyan-400">✦</span>
+                Engineering meets opportunity
+              </p>
+            </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
-
-      {/* Bottom Fade */}
-
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white via-white/70 to-transparent" />
     </section>
   );
 }
