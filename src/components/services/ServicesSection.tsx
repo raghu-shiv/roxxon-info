@@ -2,107 +2,412 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  ArrowRight,
+  BrainCircuit,
+  CheckCircle2,
+  Cloud,
+  Code2,
+  Cpu,
+  Sparkles,
+  Users,
+} from "lucide-react";
+
+import SectionHeader from "@/components/ui/SectionHeader";
 import ServiceDetailsPopUp from "./ServiceDetailsPopUp";
 
 const services = [
   {
     title: "IT Infrastructure Management",
     description:
-      "Our IT Infrastructure Management service is designed to ensure your business runs seamlessly with secure, scalable, and high-performing systems. From networks and servers to endpoint devices, we oversee every layer of infrastructure with a focus on operational efficiency and cybersecurity.",
+      "Keep your business running with dependable IT infrastructure, network management, device support and security-focused systems designed around your operational needs.",
     icon: "/images/flaticon/svg/002-travel-1.svg",
+    Icon: Cpu,
+    gradient: "from-cyan-500 to-blue-500",
+    features: ["IT Support", "Infrastructure", "System Reliability"],
   },
   {
     title: "Software Development",
     description:
-      "In today’s digital-first world, your website is your brand’s first and most powerful impression. Our Web Designing services focus on crafting responsive, visually stunning, and conversion-oriented websites that engage users and deliver results.",
+      "Build digital experiences and business applications with responsive interfaces, maintainable code and functionality tailored to your requirements.",
     icon: "/images/flaticon/svg/001-travel.svg",
+    Icon: Code2,
+    gradient: "from-violet-500 to-fuchsia-500",
+    features: ["Web Development", "Custom Software", "Digital Products"],
   },
-  // {
-  //   title: "Annual Maintenance Contract",
-  //   description:
-  //     "Our Annual Maintenance Contract (AMC) services are tailored to deliver uninterrupted IT performance, seamless connectivity, and end-to-end system integration. Roxxon Infotech ensures that your infrastructure operates efficiently, so you can stay focused on scaling your business.",
-  //   icon: "/images/flaticon/svg/003-travel-2.svg",
-  // },
-  // {
-  //   title: "Digital Service Cloud Platform",
-  //   description:
-  //     "Our Digital Service Cloud Platform unifies data, services, and tools to deliver seamless customer interactions, personalized experiences, and faster issue resolution. At Roxxon Infotech, we empower businesses with scalable cloud infrastructure, real-time support, and cost-effective digital transformation solutions.",
-  //   icon: "/images/flaticon/svg/004-travel-3.svg",
-  // },
   {
     title: "Mobile App Development",
     description:
-      "Our Mobile App Development service empowers businesses to deliver seamless, high-performance applications across Android platform. Using cutting-edge technologies like React Native, we create scalable, user-friendly mobile apps tailored to your specific needs—while ensuring faster development cycles and consistent UI across devices.",
+      "Create user-friendly mobile applications with cross-platform development approaches, consistent experiences and room to evolve as your business grows.",
     icon: "/images/flaticon/svg/004-travel-3.svg",
+    Icon: BrainCircuit,
+    gradient: "from-emerald-500 to-teal-500",
+    features: ["Mobile Applications", "Cross-Platform", "User Experience"],
   },
   {
     title: "Workforce Solutions",
     description:
-      "Our Workforce Solutions service is designed to optimize your human capital management, ensuring that your organization has the right talent in the right roles. From recruitment and onboarding to training and performance management, we provide comprehensive solutions that enhance productivity, employee engagement, and organizational growth.",
+      "Connect with technology professionals through flexible staffing and recruitment support designed to help businesses build and extend their teams.",
     icon: "/images/flaticon/svg/004-travel-3.svg",
+    Icon: Users,
+    gradient: "from-orange-500 to-pink-500",
+    features: ["IT Staffing", "Recruitment", "Dedicated Teams"],
   },
-  // {
-  //   title: "Biometric Security Solutions",
-  //   description:
-  //     "Our Biometric Security Solutions leverage unique human traits to ensure secure and reliable identity verification. Replacing traditional passwords and PINs with physical and behavioral identifiers, we help businesses enhance security, streamline access control, and reduce fraud across sectors like law enforcement, healthcare, travel, and defense.",
-  //   icon: "/images/flaticon/svg/005-travel-4.svg",
-  // },
-  // {
-  //   title: "CCTV Surveillance",
-  //   description:
-  //     "Our CCTV Surveillance solutions deliver 24/7 real-time monitoring to enhance the safety of your property. Using advanced video camera systems, we enable live and recorded views of indoor and outdoor environments, helping to deter crime and safeguard your assets with dependable and scalable security systems.",
-  //   icon: "/images/flaticon/svg/006-food.svg",
-  // },
 ];
+
+const container: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 24,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function ServicesSection() {
   const [selectedService, setSelectedService] = useState<
-    null | (typeof services)[0]
+    (typeof services)[number] | null
   >(null);
 
-  return (
-    <section id="services-section" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-20">
-        <div className="grid md:grid-cols-2 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="flex bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-[1.02] hover:bg-amber group hover:cursor-pointer"
-              onClick={() => setSelectedService(service)}
-            >
-              <div className="w-20 h-20 flex-shrink-0 mr-6">
-                <Image
-                  src={service.icon}
-                  alt={service.title}
-                  width={80}
-                  height={80}
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col">
-                <h3 className="text-xl font-semibold text-gray-600 group-hover:text-secondary transition">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 group-hover:text-white/75 mt-2">
-                  {service.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+  const reduceMotion = useReducedMotion();
 
+  return (
+    <main>
+      {/* Hero */}
+      <section className="relative isolate overflow-hidden bg-slate-950">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
+          <div className="absolute -left-24 -top-28 h-[440px] w-[440px] rounded-full bg-blue-600/20 blur-[140px]" />
+          <div className="absolute -right-20 top-0 h-[440px] w-[440px] rounded-full bg-cyan-500/15 blur-[140px]" />
+          <div
+            className="absolute inset-0 opacity-[0.045]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right,#fff 1px,transparent 1px),linear-gradient(to bottom,#fff 1px,transparent 1px)",
+              backgroundSize: "56px 56px",
+            }}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-8 lg:py-32">
+          <motion.div
+            variants={container}
+            initial={reduceMotion ? false : "hidden"}
+            animate="visible"
+            className="mx-auto max-w-4xl text-center"
+          >
+            <motion.div variants={reduceMotion ? undefined : item}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-300">
+                <Sparkles size={16} aria-hidden="true" />
+                What We Do
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={reduceMotion ? undefined : item}
+              className="mt-8 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-7xl"
+            >
+              Technology Services
+              <span className="block bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent">
+                Built Around Your Business.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={reduceMotion ? undefined : item}
+              className="mx-auto mt-7 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg"
+            >
+              From infrastructure and software to mobile applications and
+              technology talent, we help businesses find practical solutions for
+              their evolving needs.
+            </motion.p>
+
+            <motion.div
+              variants={reduceMotion ? undefined : item}
+              className="mt-10 flex flex-col justify-center gap-4 sm:flex-row"
+            >
+              <a
+                href="#services-section"
+                className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-cyan-500 px-7 py-4 font-semibold text-slate-950 transition-colors hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transition-none"
+              >
+                Explore Services
+                <ArrowRight size={18} aria-hidden="true" />
+              </a>
+
+              <Link
+                href="/contact"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/20 bg-white/5 px-7 py-4 font-semibold text-white backdrop-blur-xl transition-colors hover:border-cyan-400/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transition-none"
+              >
+                Discuss Your Project
+              </Link>
+            </motion.div>
+
+            <motion.div
+              variants={reduceMotion ? undefined : item}
+              className="mx-auto mt-14 grid max-w-3xl gap-3 text-left sm:grid-cols-3"
+            >
+              {[
+                { icon: Code2, label: "Build", detail: "Digital solutions" },
+                { icon: Cloud, label: "Support", detail: "IT capabilities" },
+                { icon: Users, label: "Scale", detail: "Technology teams" },
+              ].map(({ icon: Icon, label, detail }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-cyan-400/15 bg-cyan-400/10">
+                    <Icon
+                      size={21}
+                      className="text-cyan-300"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span>
+                    <span className="block font-semibold text-white">
+                      {label}
+                    </span>
+                    <span className="mt-1 block text-sm text-slate-400">
+                      {detail}
+                    </span>
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Service cards */}
+      <section
+        id="services-section"
+        className="relative isolate overflow-hidden bg-slate-950 py-24 sm:py-28"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-28 top-10 -z-10 h-80 w-80 rounded-full bg-cyan-500/10 blur-[120px]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-20 -right-20 -z-10 h-80 w-80 rounded-full bg-blue-500/10 blur-[120px]"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionHeader
+            tone="dark"
+            badge="Our Services"
+            title="The Right Capabilities"
+            highlight="For Your Next Step"
+            description="Explore our service areas and select a solution to learn more about how we can support your business."
+          />
+
+          <motion.div
+            variants={container}
+            initial={reduceMotion ? false : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="mt-16 grid gap-6 md:grid-cols-2 xl:gap-8"
+          >
+            {services.map((service) => {
+              const Icon = service.Icon;
+
+              return (
+                <motion.button
+                  key={service.title}
+                  type="button"
+                  variants={reduceMotion ? undefined : item}
+                  whileHover={reduceMotion ? undefined : { y: -6 }}
+                  whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+                  onClick={() => setSelectedService(service)}
+                  aria-label={`Learn more about ${service.title}`}
+                  className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-left backdrop-blur-xl transition-[border-color,background-color,box-shadow] duration-300 hover:border-cyan-400/30 hover:bg-white/[0.07] hover:shadow-xl hover:shadow-cyan-950/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:p-8 motion-reduce:transition-none"
+                >
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-[0.08] motion-reduce:transition-none`}
+                  />
+
+                  <div className="relative flex h-full flex-col">
+                    <div className="flex items-start justify-between gap-4">
+                      <span
+                        className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${service.gradient} text-white shadow-lg`}
+                      >
+                        <Icon size={27} aria-hidden="true" />
+                      </span>
+
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition-colors group-hover:border-cyan-400/30 group-hover:text-cyan-300 motion-reduce:transition-none">
+                        <ArrowRight size={18} aria-hidden="true" />
+                      </span>
+                    </div>
+
+                    <h3 className="mt-7 text-2xl font-bold tracking-tight text-white">
+                      {service.title}
+                    </h3>
+
+                    <p className="mt-4 flex-1 text-sm leading-7 text-slate-300 sm:text-base">
+                      {service.description}
+                    </p>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {service.features.map((feature) => (
+                        <span
+                          key={feature}
+                          className="rounded-full border border-white/10 bg-slate-950/70 px-3 py-1.5 text-xs font-medium text-slate-200 sm:text-sm"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300">
+                      View service details
+                      <ArrowRight
+                        size={16}
+                        aria-hidden="true"
+                        className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+                      />
+                    </div>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How we help */}
+      <section className="relative overflow-hidden bg-white py-24 sm:py-28">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-cyan-100/70 blur-[110px]"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionHeader
+            badge="Our Approach"
+            title="Technology That Works"
+            highlight="Toward Your Goals"
+            description="We focus on understanding the challenge, identifying a suitable approach and helping you move forward with clarity."
+          />
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                number: "01",
+                title: "Understand",
+                description:
+                  "We start by learning about your requirements, current challenges and business priorities.",
+              },
+              {
+                number: "02",
+                title: "Plan",
+                description:
+                  "We work with you to identify a practical direction based on your needs and constraints.",
+              },
+              {
+                number: "03",
+                title: "Move Forward",
+                description:
+                  "We align on the next steps and collaborate toward a solution that supports your goals.",
+              },
+            ].map((step, index) => (
+              <motion.article
+                key={step.number}
+                {...(reduceMotion
+                  ? {}
+                  : {
+                      initial: { opacity: 0, y: 20 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: true, amount: 0.15 },
+                      transition: {
+                        duration: 0.5,
+                        delay: index * 0.08,
+                      },
+                    })}
+                className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition-shadow hover:shadow-xl hover:shadow-slate-900/5 sm:p-8 motion-reduce:transition-none"
+              >
+                <span className="inline-flex rounded-xl border border-cyan-200 bg-cyan-50 px-3 py-2 text-sm font-bold text-cyan-800">
+                  {step.number}
+                </span>
+
+                <h3 className="mt-6 text-xl font-bold text-slate-950">
+                  {step.title}
+                </h3>
+
+                <p className="mt-3 leading-7 text-slate-600">
+                  {step.description}
+                </p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="relative isolate overflow-hidden bg-slate-950 py-20 sm:py-24">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+        >
+          <div className="absolute left-1/4 top-0 h-72 w-72 rounded-full bg-cyan-500/15 blur-[120px]" />
+          <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-blue-500/15 blur-[120px]" />
+        </div>
+
+        <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-6 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-300">
+              <Sparkles size={16} aria-hidden="true" />
+              Have a Project in Mind?
+            </span>
+
+            <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Let&apos;s find the right solution
+              <span className="mt-2 block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                for your business.
+              </span>
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+              Tell us what you&apos;re working on. We&apos;ll start with a
+              conversation about your goals and the best next step.
+            </p>
+          </div>
+
+          <Link
+            href="/contact"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-3 self-start rounded-xl bg-cyan-500 px-7 py-4 font-semibold text-slate-950 transition-colors hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transition-none lg:self-center"
+          >
+            Contact Us
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Existing service details modal */}
       {selectedService && (
         <ServiceDetailsPopUp
           service={selectedService}
           onClose={() => setSelectedService(null)}
         />
       )}
-    </section>
+    </main>
   );
 }

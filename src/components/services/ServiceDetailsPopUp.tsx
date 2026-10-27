@@ -1,7 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, CheckCircle2, X } from "lucide-react";
 
 type Service = {
   title: string;
@@ -36,7 +39,7 @@ const serviceDetails = [
     ],
   },
   {
-    title: "Web Designing",
+    title: "Software Development",
     points: [
       {
         name: "Captivating Visual Identity",
@@ -213,59 +216,233 @@ const serviceDetails = [
 ];
 
 export default function ServiceDetailsPopUp({ service, onClose }: Props) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const detail = serviceDetails.find((item) => item.title === service.title);
+
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
     document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+
+      if (!focusable.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-  }, []);
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused?.focus();
+    };
+  }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-primary/50 flex items-center justify-center px-4">
+    <AnimatePresence>
       <motion.div
-        className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full relative overflow-y-auto max-h-[90vh]"
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
+        key="service-dialog-overlay"
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+        className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-slate-950/80 px-3 py-5 backdrop-blur-md sm:items-center sm:px-6 sm:py-8"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) {
+            onClose();
+          }
+        }}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-5 text-gray-500 hover:text-red-600 text-3xl focus:outline-none"
-          aria-label="Close"
+        <motion.div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="service-dialog-title"
+          aria-describedby="service-dialog-description"
+          initial={
+            shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.98 }
+          }
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={
+            shouldReduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: 12, scale: 0.98 }
+          }
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.25,
+            ease: "easeOut",
+          }}
+          className="relative my-auto w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-slate-950 text-white shadow-2xl shadow-black/40"
         >
-          &times;
-        </button>
+          {/* Ambient background */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 overflow-hidden"
+          >
+            <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-[100px]" />
+            <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-blue-500/10 blur-[100px]" />
+          </div>
 
-        <div className="text-center mb-6">
-          <img
-            src={service.icon}
-            alt={service.title}
-            className="mx-auto mb-4 w-16 h-16"
-          />
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-700">
-            {service.title}
-          </h2>
-        </div>
+          {/* Header */}
+          <div className="relative border-b border-white/10 px-5 pb-7 pt-6 sm:px-8 sm:pb-8 sm:pt-8">
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={onClose}
+              aria-label="Close service details"
+              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition-colors hover:border-cyan-400/30 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 motion-reduce:transition-none sm:right-6 sm:top-6"
+            >
+              <X size={20} aria-hidden="true" />
+            </button>
 
-        <p className="text-gray-600 mt-3">{service.description}</p>
+            <div className="flex items-start gap-4 pr-10 sm:gap-5 sm:pr-12">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/15 to-blue-500/15 p-3 sm:h-20 sm:w-20">
+                <Image
+                  src={service.icon}
+                  alt=""
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-contain"
+                />
+              </div>
 
-        {serviceDetails
-          .filter((detail) => detail.title === service.title)
-          .map((detail, index) => (
-            <div key={index} className="mt-6 space-y-6">
-              {detail.points.map((point, idx) => (
-                <div key={idx} className="bg-amber/60 p-4 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-primary mb-2">
-                    {point.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {point.description}
-                  </p>
-                </div>
-              ))}
+              <div className="min-w-0">
+                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-semibold text-cyan-300 sm:text-sm">
+                  <CheckCircle2 size={14} aria-hidden="true" />
+                  Service Overview
+                </span>
+
+                <h2
+                  id="service-dialog-title"
+                  className="mt-4 text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl"
+                >
+                  {service.title}
+                </h2>
+              </div>
             </div>
-          ))}
+
+            <p
+              id="service-dialog-description"
+              className="mt-6 text-sm leading-7 text-slate-300 sm:text-base sm:leading-8"
+            >
+              {service.description}
+            </p>
+          </div>
+
+          {/* Service details */}
+          <div className="relative px-5 py-6 sm:px-8 sm:py-8">
+            <div className="mb-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                What&apos;s Included
+              </p>
+              <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+                How we can help
+              </h3>
+            </div>
+
+            {detail && detail.points.length > 0 ? (
+              <div className="space-y-4">
+                {detail.points.map((point, index) => (
+                  <motion.article
+                    key={point.name}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0 : 0.25,
+                      delay: shouldReduceMotion ? 0 : index * 0.04,
+                    }}
+                    className="rounded-2xl border border-white/10 bg-white/[0.045] p-5 transition-colors hover:border-cyan-400/20 hover:bg-white/[0.065] sm:p-6 motion-reduce:transition-none"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-cyan-400/20 bg-cyan-400/10 text-sm font-bold text-cyan-300">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+
+                      <div className="min-w-0">
+                        <h4 className="text-base font-semibold leading-6 text-white sm:text-lg">
+                          {point.name}
+                        </h4>
+
+                        <p className="mt-2 text-sm leading-7 text-slate-300 sm:text-base">
+                          {point.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <p className="text-sm leading-7 text-slate-300">
+                  Detailed information for this service is not available yet.
+                  Contact our team to discuss your requirements.
+                </p>
+              </div>
+            )}
+
+            {/* Footer CTA */}
+            <div className="mt-8 rounded-2xl border border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-5 sm:p-6">
+              <h3 className="text-lg font-bold text-white sm:text-xl">
+                Have a project in mind?
+              </h3>
+
+              <p className="mt-2 text-sm leading-7 text-slate-300">
+                Tell us what you need, and let&apos;s discuss how this service
+                could support your business.
+              </p>
+
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/contact"
+                  onClick={onClose}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 transition-colors hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 motion-reduce:transition-none"
+                >
+                  Discuss This Service
+                  <ArrowRight size={17} aria-hidden="true" />
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 motion-reduce:transition-none"
+                >
+                  Continue Exploring
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
-    </div>
+    </AnimatePresence>
   );
 }
