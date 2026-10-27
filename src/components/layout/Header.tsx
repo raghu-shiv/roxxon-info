@@ -2,154 +2,188 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/staffing", label: "Staffing" },
+  { href: "/contact", label: "Contact us" },
+];
+
+const consultationHref = "/#whatsapp-contact";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const shouldReduceMotion = useReducedMotion();
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/services", label: "Services" },
-    { href: "/staffing", label: "Staffing" },
-    { href: "/contact", label: "Contact us" },
-  ];
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
-  const isActive = (href: string) => pathname === href;
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const isActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   const renderNavLinks = (isMobile = false) =>
-    navLinks.map(({ href, label }) => (
-      <Link
-        key={href}
-        href={href}
-        className={`transition ${
-          isActive(href) ? "text-primary" : "hover:text-secondary"
-        } ${isMobile ? "block text-center py-2" : ""}`}
-      >
-        {label}
-      </Link>
-    ));
+    navLinks.map(({ href, label }) => {
+      const active = isActive(href);
+
+      return (
+        <Link
+          key={href}
+          href={href}
+          onClick={isMobile ? closeMobileMenu : undefined}
+          aria-current={active ? "page" : undefined}
+          className={[
+            "group relative inline-flex items-center font-medium transition-colors duration-200",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950",
+            isMobile
+              ? "w-full justify-center rounded-xl px-4 py-3 text-base"
+              : "h-12 px-1 text-sm",
+            active ? "text-cyan-300" : "text-slate-300 hover:text-white",
+            isMobile && active ? "bg-white/5" : "",
+            "motion-reduce:transition-none",
+          ].join(" ")}
+        >
+          {label}
+
+          {!isMobile && (
+            <span
+              className={[
+                "absolute inset-x-0 bottom-1 h-0.5 origin-left rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-transform duration-200",
+                active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                "motion-reduce:transition-none",
+              ].join(" ")}
+            />
+          )}
+        </Link>
+      );
+    });
 
   return (
-    <>
-      {/* // Topbar - hidden on sm and below
-      <div className="hidden md:block bg-midnight py-3 text-white text-sm">
-        <div className="container mx-auto px-7 flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-2 md:mb-0 text-center md:text-left">
-            <p className="mb-0">
-              <span className="font-light text-gray-400">Phone no:</span>{" "}
-              <a href="tel:+918090452438" className="hover:underline">
-                +91 8090452438
-              </a>{" "}
-              or <span className="font-light text-gray-400">email us:</span>{" "}
-              <a
-                href="mailto:roxxoninfotech@gmail.com"
-                className="hover:underline"
-              >
-                roxxoninfotech@gmail.com
-              </a>
-            </p>
-          </div>
-          <div className="flex space-x-3">
-            {["facebook", "twitter", "instagram", "dribbble"].map((social) => (
-              <a
-                key={social}
-                href="https://www.instagram.com/roxxon_info0723?igsh=NzJlc2E4bG5kejkz"
-                className="text-white hover:text-secondary"
-                referrerPolicy="no-referrer"
-                target="_blank"
-              >
-                <span className={`fa fa-${social}`}></span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div> */}
-
-      {/* Navbar with animation */}
-      <motion.nav
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className="bg-white text-black shadow-sm sticky top-0 z-50"
-      >
-        <div className="container mx-auto px-4 flex items-center justify-between py-3">
-          <Link href="/" className="text-xl font-bold">
+    <motion.header
+      initial={shouldReduceMotion ? false : { y: -16, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : { duration: 0.35, ease: "easeOut" }
+      }
+      className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 text-white shadow-lg shadow-slate-950/10 backdrop-blur-xl"
+    >
+      <nav aria-label="Main navigation">
+        <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <Link
+            href="/"
+            aria-label="Roxxon Infotech home"
+            className="shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+            onClick={closeMobileMenu}
+          >
             <Image
-              src="/images/logo.png"
+              src="/images/logo_light.png"
               alt="Roxxon Infotech"
               width={140}
               height={40}
-              className="object-contain"
               priority
+              className="h-10 w-auto object-contain"
             />
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden items-center gap-7 lg:flex xl:gap-9">
             {renderNavLinks()}
-            <Link
-              href="/#whatsapp-contact"
-              className="ml-4 bg-primary text-white px-5 py-2 rounded hover:bg-secondary transition"
-            >
-              Free Consultation
-            </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden text-black focus:outline-none"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Menu"
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-slate-100 transition-colors hover:border-cyan-400/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 lg:hidden motion-reduce:transition-none"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            aria-label={
+              isMobileMenuOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+            }
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={
-                  isMobileMenuOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16M4 18h16"
-                }
-              />
-            </svg>
+            {isMobileMenuOpen ? (
+              <svg
+                aria-hidden="true"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M6 6l12 12M18 6 6 18"
+                />
+              </svg>
+            ) : (
+              <svg
+                aria-hidden="true"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M4 7h16M4 12h16M4 17h16"
+                />
+              </svg>
+            )}
           </button>
         </div>
 
-        {/* Mobile Menu with animation */}
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {isMobileMenuOpen && (
             <motion.div
-              key="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden bg-white border-t border-gray-200 overflow-hidden"
+              id="mobile-navigation"
+              key="mobile-navigation"
+              initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={
+                shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }
+              }
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.25, ease: "easeInOut" }
+              }
+              className="overflow-hidden border-t border-white/10 bg-slate-950 lg:hidden"
             >
-              <div className="px-4 py-4 space-y-2 flex flex-col items-center">
+              <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 sm:px-6">
                 {renderNavLinks(true)}
-                <Link
-                  href="/#whatsapp-contact"
-                  className="bg-primary text-white px-5 py-2 rounded hover:bg-secondary transition"
-                >
-                  Free Consultation
-                </Link>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
-    </>
+      </nav>
+    </motion.header>
   );
 }

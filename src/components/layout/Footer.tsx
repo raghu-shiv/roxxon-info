@@ -43,7 +43,7 @@ export default function Footer() {
           {/* Logo and About */}
           <div>
             <Image
-              src="/images/logo.png"
+              src="/images/logo_light.png"
               alt="Roxxon Infotech"
               width={160}
               height={50}
